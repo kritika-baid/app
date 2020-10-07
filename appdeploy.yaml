@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: app
+    spec:
+      containers:
+      - name: app
+        image: image
+        args: ["serve"]
+        lifecycle:
+           postStart:
+             exec:
+               command: ["/bin/sh", "-c", "sleep 60 && cd /TechChallengeApp && ./TechChallengeApp updatedb"]
+        ports:
+        - containerPort: 3000
+      
